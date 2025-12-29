@@ -7,81 +7,73 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap');
 
-        /* Reset and Mobile optimization */
-        * { 
-            box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent; 
-            margin: 0; 
-            padding: 0; 
-        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
 
         body {
             font-family: 'Poppins', sans-serif;
             background: #FF9933; 
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
             transition: background 0.5s ease;
-            /* Subtle Rajasthani dot pattern on background */
             background-image: radial-gradient(rgba(255,255,255,0.2) 15%, transparent 15%);
             background-size: 20px 20px;
         }
 
-        /* Royal Background Colors */
-        .bg-1 { background-color: #FF9933; } /* Saffron */
-        .bg-2 { background-color: #A52A2A; } /* Maroon */
-        .bg-3 { background-color: #FFD700; } /* Gold */
-        .bg-4 { background-color: #E30B5C; } /* Jaipur Pink */
+        .bg-1 { background-color: #FF9933; }
+        .bg-2 { background-color: #A52A2A; }
+        .bg-3 { background-color: #FFD700; }
+        .bg-4 { background-color: #E30B5C; }
 
         .card {
             background: #FFFBF2;
             width: 85%;
-            max-width: 320px;
-            padding: 25px 20px;
+            max-width: 350px;
+            padding: 30px 20px;
             border-radius: 20px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            position: absolute;
-            /* THIN ROYAL BORDER FIX */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             border: 2px solid #800000;
-            outline: 1px solid #FFD700;
-            outline-offset: -5px;
-            
-            display: flex;
+            display: none; /* Hide all by default */
             flex-direction: column;
-            justify-content: space-between;
-            min-height: 320px;
+            animation: fadeIn 0.5s ease;
         }
 
-        .hidden { display: none !important; }
+        /* Show only the active card */
+        .card.active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
 
         h1 { 
             font-family: 'Dancing Script', cursive; 
             color: #800000; 
-            font-size: 2rem; 
-            margin-bottom: 10px;
+            font-size: 2.2rem; 
+            margin-bottom: 15px;
         }
         
-        p { color: #444; line-height: 1.5; margin-bottom: 20px; font-size: 0.95rem; }
+        p { color: #444; line-height: 1.6; margin-bottom: 25px; font-size: 1rem; }
         .highlight { color: #E30B5C; font-weight: 700; }
 
         .tap-btn {
             background: linear-gradient(135deg, #800000, #E30B5C);
             color: #FFD700;
             border: 1px solid #FFD700;
-            padding: 14px;
+            padding: 15px;
             border-radius: 12px;
             width: 100%;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 600;
             cursor: pointer;
-            margin-top: auto;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            touch-action: manipulation;
         }
 
-        .particle { position: fixed; pointer-events: none; z-index: 999; font-size: 20px; }
+        .particle { position: fixed; pointer-events: none; z-index: 999; font-size: 25px; }
     </style>
 </head>
 <body class="bg-1">
@@ -90,30 +82,72 @@
         <source src="music.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="slide1" class="card">
-        <div>
-            <h1>Hi Tannu! ✨</h1>
-            <p>I built a small world just for you to start 2026. <br><span class="highlight">Give this button 3 royal taps...</span></p>
-        </div>
+    <div id="slide1" class="card active">
+        <h1>Hi Tannu! ✨</h1>
+        <p>I built a small world just for you to start 2026. <br><span class="highlight">Give this button 3 royal taps...</span></p>
         <button id="btn1" class="tap-btn" onclick="handleTap(1)">Tap 1</button>
     </div>
 
-    <div id="slide2" class="card hidden">
-        <div>
-            <h1>For You 🦋</h1>
-            <p>Just like these <span class="highlight">beautiful butterflies</span>, I wish your 2026 is full of freedom, beauty, and joy.</p>
-        </div>
+    <div id="slide2" class="card">
+        <h1>For You 🦋</h1>
+        <p>Just like these <span class="highlight">beautiful butterflies</span>, I wish your 2026 is full of freedom, beauty, and joy.</p>
         <button id="btn2" class="tap-btn" onclick="handleTap(2)">Tap 1</button>
     </div>
 
-    <div id="slide3" class="card hidden">
-        <div>
-            <h1>Big Hugs 🧸</h1>
-            <p>May your 2026 be filled with as much warmth and comfort as a <span class="highlight">big teddy bear hug</span>.</p>
-        </div>
+    <div id="slide3" class="card">
+        <h1>Big Hugs 🧸</h1>
+        <p>May your 2026 be filled with as much warmth and comfort as a <span class="highlight">big teddy bear hug</span>.</p>
         <button id="btn3" class="tap-btn" onclick="handleTap(3)">Tap 1</button>
     </div>
 
-    <div id="slide4" class="card hidden">
-        <div>
-            <h1>Happy New Year
+    <div id="slide4" class="card">
+        <h1>Happy New Year, Tannu! ❤️</h1>
+        <p>You are the <span class="highlight">most precious person</span> in my life, so this is my first wish to my precious one.</p>
+        <p>I wish you get all the happiness in the world in 2026!</p>
+        <button class="tap-btn" onclick="location.reload()">Start Over ✨</button>
+    </div>
+
+    <script>
+        let taps = 1;
+        const song = document.getElementById('mySong');
+        const colors = ['bg-1', 'bg-2', 'bg-3', 'bg-4'];
+
+        function handleTap(num) {
+            // Force music play
+            if (song.paused) {
+                song.play().catch(e => console.log("Waiting for more taps for audio"));
+            }
+
+            // Burst Effect
+            for (let i = 0; i < 12; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.innerHTML = ['✨', '🌸', '💖', '🦚'][Math.floor(Math.random()*4)];
+                p.style.left = '50%'; p.style.top = '50%';
+                document.body.appendChild(p);
+                const a = Math.random() * Math.PI * 2;
+                const d = Math.random() * 120 + 50;
+                p.animate([
+                    {transform:'translate(-50%,-50%) scale(1)', opacity:1},
+                    {transform:`translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px) scale(0)`, opacity:0}
+                ], 800).onfinish = () => p.remove();
+            }
+
+            // Logic Fix
+            if (taps < 3) {
+                taps++;
+                document.getElementById('btn' + num).innerText = 'Tap ' + taps;
+            } else {
+                taps = 1;
+                // Hide current, show next
+                document.getElementById('slide' + num).classList.remove('active');
+                const nextSlide = document.getElementById('slide' + (num + 1));
+                if (nextSlide) {
+                    nextSlide.classList.add('active');
+                    document.body.className = colors[num];
+                }
+            }
+        }
+    </script>
+</body>
+</html>
