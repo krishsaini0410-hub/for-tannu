@@ -7,18 +7,26 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        /* Prevents weird phone selection boxes */
+        * { 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+            user-select: none;
+            -webkit-user-select: none;
+        }
 
         body {
             margin: 0; padding: 0;
             font-family: 'Poppins', sans-serif;
             background: #ffc8dd;
             overflow: hidden;
+            /* Fix for mobile height */
             height: 100vh;
+            height: -webkit-fill-available;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: background 1s ease;
+            transition: background 0.8s ease;
         }
 
         .bg-1 { background: #ffc8dd; }
@@ -27,36 +35,42 @@
         .bg-4 { background: #fdf0d5; }
 
         .card {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px 25px;
-            border-radius: 40px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-            width: 88%;
-            max-width: 380px;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 30px 20px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 85%;
+            max-width: 350px;
             text-align: center;
-            z-index: 100;
             position: absolute;
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            transition: all 0.4s ease-in-out;
             border: 2px solid white;
         }
 
-        .hidden { display: none; opacity: 0; transform: scale(0.9); }
+        /* Better hidden state for mobile */
+        .hidden { 
+            opacity: 0; 
+            visibility: hidden;
+            transform: scale(0.8) translateY(20px); 
+        }
 
-        h1 { font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #ff5c8a; margin: 0; }
-        p { font-size: 1.05rem; color: #555; margin: 20px 0; line-height: 1.6; }
+        h1 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #ff5c8a; margin: 0; }
+        p { font-size: 1rem; color: #555; margin: 15px 0; line-height: 1.5; }
         .highlight { color: #ff5c8a; font-weight: 600; }
 
         .tap-btn {
             background: #ff5c8a;
             color: white;
             border: none;
-            padding: 16px;
+            padding: 15px;
             border-radius: 50px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 8px 15px rgba(255, 92, 138, 0.2);
             width: 100%;
+            display: block;
+            box-shadow: 0 5px 15px rgba(255, 92, 138, 0.3);
+            touch-action: manipulation;
         }
 
         .particle {
@@ -76,19 +90,19 @@
     <div id="slide1" class="card">
         <h1>Hi Tannu! ✨</h1>
         <p>I built a small world just for you to start 2026. <br><span class="highlight">Give this button 3 gentle taps...</span></p>
-        <button id="btn1" class="tap-btn" onclick="processTap(1)">Tap 1</button>
+        <button id="btn1" class="tap-btn" onclick="handleTap(1)">Tap 1</button>
     </div>
 
     <div id="slide2" class="card hidden">
         <h1>For You 🦋</h1>
         <p>Just like these <span class="highlight">beautiful butterflies</span>, I wish your 2026 is full of freedom, beauty, and joy.</p>
-        <button id="btn2" class="tap-btn" onclick="processTap(2)">Tap 1</button>
+        <button id="btn2" class="tap-btn" onclick="handleTap(2)">Tap 1</button>
     </div>
 
     <div id="slide3" class="card hidden">
         <h1>Big Hugs 🧸</h1>
         <p>May your 2026 be filled with as much warmth and comfort as a <span class="highlight">big teddy bear hug</span>.</p>
-        <button id="btn3" class="tap-btn" onclick="processTap(3)">Tap 1</button>
+        <button id="btn3" class="tap-btn" onclick="handleTap(3)">Tap 1</button>
     </div>
 
     <div id="slide4" class="card hidden">
@@ -103,46 +117,55 @@
         const emojis = ['🌸', '✨', '💖', '🦋', '🧸', '🌷', '🌼'];
         const song = document.getElementById("mySong");
 
-        function processTap(slideNum) {
-            // Start music on the very first interaction
-            if (slideNum === 1 && tapCount === 1) {
-                song.play().catch(e => console.log("Audio play prevented"));
+        function handleTap(slideNum) {
+            // Music fix: Try to play on every tap until it works
+            if (song.paused) {
+                song.play().catch(() => {});
             }
 
-            spawnMagic();
+            // Create particles
+            const container = document.body;
+            for (let i = 0; i < 12; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                p.style.left = '50%';
+                p.style.top = '50%';
+                container.appendChild(p);
 
+                const angle = Math.random() * Math.PI * 2;
+                const dist = Math.random() * 150 + 50;
+                
+                p.animate([
+                    { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+                    { transform: `translate(${(Math.cos(angle)*dist)}px, ${(Math.sin(angle)*dist)}px) scale(0)`, opacity: 0 }
+                ], { duration: 1000, easing: 'ease-out' }).onfinish = () => p.remove();
+            }
+
+            // Tap Logic
             if (tapCount < 3) {
                 tapCount++;
-                document.getElementById(`btn${slideNum}`).innerText = `Tap ${tapCount}`;
+                document.getElementById('btn' + slideNum).innerText = 'Tap ' + tapCount;
             } else {
-                tapCount = 1; 
+                tapCount = 1;
                 changeSlide(slideNum);
             }
         }
 
         function changeSlide(current) {
-            const currentCard = document.getElementById(`slide${current}`);
-            currentCard.style.opacity = '0';
-            currentCard.style.transform = 'scale(0.8)';
+            const currentCard = document.getElementById('slide' + current);
+            currentCard.classList.add('hidden');
             
-            setTimeout(() => {
-                currentCard.classList.add('hidden');
-                let nextNum = current + 1;
-                let nextCard = document.getElementById(`slide${nextNum}`);
-                
-                if (nextCard) {
+            const nextNum = current + 1;
+            const nextCard = document.getElementById('slide' + nextNum);
+            
+            if (nextCard) {
+                setTimeout(() => {
                     nextCard.classList.remove('hidden');
-                    document.body.className = `bg-${nextNum}`;
-                    // Set next button text to Tap 1 if not on the last slide
-                    if (nextNum < 4) {
-                        document.getElementById(`btn${nextNum}`).innerText = "Tap 1";
-                    }
-                }
-            }, 500);
+                    document.body.className = 'bg-' + nextNum;
+                }, 400);
+            }
         }
-
-        function spawnMagic() {
-            for (let i = 0; i < 15; i++) {
-                const p = document.createElement('div');
-                p.className = 'particle';
-                p.innerHTML = emojis[Math
+    </script>
+</body>
+</html>
