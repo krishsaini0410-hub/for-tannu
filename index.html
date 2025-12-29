@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Khamma Ghani Tannu ✨</title>
+    <title>For Tannu ✨</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap');
 
@@ -12,7 +12,6 @@
         body {
             margin: 0; padding: 0;
             font-family: 'Poppins', sans-serif;
-            /* Traditional Saffron/Bandhani feel */
             background: #FF9933; 
             height: 100vh;
             display: flex;
@@ -20,27 +19,29 @@
             align-items: center;
             overflow: hidden;
             transition: background 0.8s;
+            /* Rajasthani Bandhani Pattern Effect */
+            background-image: radial-gradient(#ffffff 10%, transparent 10%);
+            background-size: 30px 30px;
         }
 
-        /* Rajasthani Theme Backgrounds */
-        .bg-1 { background: #FF9933; } /* Saffron */
-        .bg-2 { background: #A52A2A; } /* Royal Maroon */
-        .bg-3 { background: #FFD700; } /* Golden Yellow */
-        .bg-4 { background: #E30B5C; } /* Deep Pink (Jaipur Pink) */
+        .bg-1 { background-color: #FF9933; } /* Saffron */
+        .bg-2 { background-color: #A52A2A; } /* Maroon */
+        .bg-3 { background-color: #FFD700; } /* Gold */
+        .bg-4 { background-color: #E30B5C; } /* Jaipur Pink */
 
         .card {
-            background: #FFF5E1; /* Old Paper/Cream color */
-            width: 85%;
-            max-width: 350px;
-            padding: 30px 20px;
+            background: #FFF5E1;
+            width: 88%;
+            max-width: 360px;
+            padding: 35px 25px;
             border-radius: 20px;
             text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
             position: absolute;
             transition: 0.5s;
-            /* Traditional Rajasthani Border */
-            border: 6px double #800000;
-            outline: 2px solid #FFD700;
+            /* Traditional Rajasthani Print Border */
+            border: 8px solid #800000;
+            border-image: repeating-linear-gradient(45deg, #800000, #800000 10px, #FFD700 10px, #FFD700 20px) 20;
         }
 
         .hidden { display: none !important; }
@@ -54,98 +55,30 @@
         }
         
         p { color: #444; line-height: 1.6; margin: 15px 0; font-weight: 500; }
-        
-        .highlight { color: #E30B5C; font-weight: 600; }
+        .highlight { color: #E30B5C; font-weight: 700; }
 
         .tap-btn {
             background: linear-gradient(to right, #800000, #E30B5C);
             color: #FFD700;
             border: 2px solid #FFD700;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 16px;
+            border-radius: 12px;
             width: 100%;
             font-size: 1.2rem;
             font-weight: 600;
             cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        /* Traditional Sprinkles */
         .particle { position: fixed; pointer-events: none; z-index: 999; }
     </style>
 </head>
-<body>
+<body class="bg-1">
 
     <audio id="mySong" loop preload="auto">
         <source src="music.mp3" type="audio/mpeg">
     </audio>
 
     <div id="slide1" class="card">
-        <h1>Khamma Ghani, Tannu! ✨</h1>
-        <p>I built a small world just for you to start 2026. <br><span class="highlight">Give this button 3 royal taps...</span></p>
-        <button id="btn1" class="tap-btn" onclick="handleTap(1)">Tap 1</button>
-    </div>
-
-    <div id="slide2" class="card hidden">
-        <h1>For You 🦋</h1>
-        <p>Just like these <span class="highlight">beautiful butterflies</span>, I wish your 2026 is full of freedom, beauty, and joy.</p>
-        <button id="btn2" class="tap-btn" onclick="handleTap(2)">Tap 1</button>
-    </div>
-
-    <div id="slide3" class="card hidden">
-        <h1>Big Hugs 🧸</h1>
-        <p>May your 2026 be filled with as much warmth and comfort as a <span class="highlight">big teddy bear hug</span>.</p>
-        <button id="btn3" class="tap-btn" onclick="handleTap(3)">Tap 1</button>
-    </div>
-
-    <div id="slide4" class="card hidden">
-        <h1>Happy New Year, Tannu! ❤️</h1>
-        <p>You are the <span class="highlight">most precious person</span> in my life, so this is my first wish to my precious one.</p>
-        <p>I wish you get all the happiness in the world in 2026!</p>
-        <button class="tap-btn" onclick="location.reload()">Start Over ✨</button>
-    </div>
-
-    <script>
-        let taps = 1;
-        const song = document.getElementById('mySong');
-        // Rajasthani Theme Background Colors
-        const colors = ['#FF9933', '#A52A2A', '#FFD700', '#E30B5C'];
-        // Traditional Emojis
-        const rajasthaniEmojis = ['✨', '🌸', '🔱', '💖', '🌼', '👑', '🦚'];
-
-        function handleTap(num) {
-            if (song.paused) song.play().catch(() => {});
-
-            // Traditional Explosion
-            for (let i = 0; i < 15; i++) {
-                const p = document.createElement('div');
-                p.className = 'particle';
-                p.innerHTML = rajasthaniEmojis[Math.floor(Math.random() * rajasthaniEmojis.length)];
-                p.style.left = '50%'; p.style.top = '50%';
-                p.style.fontSize = '24px';
-                document.body.appendChild(p);
-                const a = Math.random() * Math.PI * 2;
-                const d = Math.random() * 160 + 60;
-                p.animate([
-                    {transform:'translate(-50%,-50%) scale(1)', opacity:1},
-                    {transform:`translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px) scale(0) rotate(360deg)`, opacity:0}
-                ], 1200).onfinish = () => p.remove();
-            }
-
-            if (taps < 3) {
-                taps++;
-                document.getElementById('btn' + num).innerText = 'Tap ' + taps;
-            } else {
-                taps = 1;
-                document.getElementById('slide' + num).classList.add('hidden');
-                const next = document.getElementById('slide' + (num + 1));
-                if (next) {
-                    next.classList.remove('hidden');
-                    document.body.style.background = colors[num];
-                }
-            }
-        }
-    </script>
-</body>
-</html>
+        <h1>Hi Tannu! ✨</h1>
+        <p>I built a small world just for you to start 2026. <br><span class="highlight">Give this button 3 royal taps
