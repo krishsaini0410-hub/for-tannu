@@ -5,57 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For Tannu ✨</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap');
 
-        /* Prevents weird phone selection boxes */
-        * { 
-            box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent; 
-            user-select: none;
-            -webkit-user-select: none;
-        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             margin: 0; padding: 0;
             font-family: 'Poppins', sans-serif;
             background: #ffc8dd;
-            overflow: hidden;
-            /* Fix for mobile height */
             height: 100vh;
-            height: -webkit-fill-available;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: background 0.8s ease;
+            overflow: hidden;
+            transition: background 0.6s;
         }
-
-        .bg-1 { background: #ffc8dd; }
-        .bg-2 { background: #a2d2ff; }
-        .bg-3 { background: #cdb4db; }
-        .bg-4 { background: #fdf0d5; }
 
         .card {
-            background: rgba(255, 255, 255, 0.98);
-            padding: 30px 20px;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: white;
             width: 85%;
             max-width: 350px;
+            padding: 30px 20px;
+            border-radius: 30px;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             position: absolute;
-            transition: all 0.4s ease-in-out;
-            border: 2px solid white;
+            transition: 0.4s;
+            border: 2px solid #ffafcc;
         }
 
-        /* Better hidden state for mobile */
-        .hidden { 
-            opacity: 0; 
-            visibility: hidden;
-            transform: scale(0.8) translateY(20px); 
-        }
+        .hidden { display: none !important; }
 
-        h1 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #ff5c8a; margin: 0; }
-        p { font-size: 1rem; color: #555; margin: 15px 0; line-height: 1.5; }
+        h1 { font-family: 'Dancing Script', cursive; color: #ff5c8a; font-size: 2.2rem; margin: 0; }
+        p { color: #555; line-height: 1.6; margin: 15px 0; }
         .highlight { color: #ff5c8a; font-weight: 600; }
 
         .tap-btn {
@@ -64,24 +46,16 @@
             border: none;
             padding: 15px;
             border-radius: 50px;
+            width: 100%;
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            width: 100%;
-            display: block;
-            box-shadow: 0 5px 15px rgba(255, 92, 138, 0.3);
-            touch-action: manipulation;
         }
 
-        .particle {
-            position: fixed;
-            pointer-events: none;
-            z-index: 200;
-            font-size: 24px;
-        }
+        .particle { position: fixed; pointer-events: none; z-index: 999; }
     </style>
 </head>
-<body class="bg-1">
+<body>
 
     <audio id="mySong" loop preload="auto">
         <source src="music.mp3" type="audio/mpeg">
@@ -113,57 +87,42 @@
     </div>
 
     <script>
-        let tapCount = 1;
-        const emojis = ['🌸', '✨', '💖', '🦋', '🧸', '🌷', '🌼'];
-        const song = document.getElementById("mySong");
+        let taps = 1;
+        const song = document.getElementById('mySong');
+        const colors = ['#ffc8dd', '#a2d2ff', '#cdb4db', '#fdf0d5'];
 
-        function handleTap(slideNum) {
-            // Music fix: Try to play on every tap until it works
-            if (song.paused) {
-                song.play().catch(() => {});
-            }
+        function handleTap(num) {
+            // Play music
+            if (song.paused) song.play().catch(() => {});
 
-            // Create particles
-            const container = document.body;
-            for (let i = 0; i < 12; i++) {
+            // Explosion
+            for (let i = 0; i < 10; i++) {
                 const p = document.createElement('div');
                 p.className = 'particle';
-                p.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-                p.style.left = '50%';
-                p.style.top = '50%';
-                container.appendChild(p);
-
-                const angle = Math.random() * Math.PI * 2;
-                const dist = Math.random() * 150 + 50;
-                
+                p.innerHTML = ['🌸','✨','💖','🦋'][Math.floor(Math.random()*4)];
+                p.style.left = '50%'; p.style.top = '50%';
+                p.style.fontSize = '20px';
+                document.body.appendChild(p);
+                const a = Math.random()*Math.PI*2;
+                const d = Math.random()*150+50;
                 p.animate([
-                    { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
-                    { transform: `translate(${(Math.cos(angle)*dist)}px, ${(Math.sin(angle)*dist)}px) scale(0)`, opacity: 0 }
-                ], { duration: 1000, easing: 'ease-out' }).onfinish = () => p.remove();
+                    {transform:'translate(-50%,-50%) scale(1)', opacity:1},
+                    {transform:`translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px) scale(0)`, opacity:0}
+                ], 1000).onfinish = () => p.remove();
             }
 
-            // Tap Logic
-            if (tapCount < 3) {
-                tapCount++;
-                document.getElementById('btn' + slideNum).innerText = 'Tap ' + tapCount;
+            // Logic
+            if (taps < 3) {
+                taps++;
+                document.getElementById('btn' + num).innerText = 'Tap ' + taps;
             } else {
-                tapCount = 1;
-                changeSlide(slideNum);
-            }
-        }
-
-        function changeSlide(current) {
-            const currentCard = document.getElementById('slide' + current);
-            currentCard.classList.add('hidden');
-            
-            const nextNum = current + 1;
-            const nextCard = document.getElementById('slide' + nextNum);
-            
-            if (nextCard) {
-                setTimeout(() => {
-                    nextCard.classList.remove('hidden');
-                    document.body.className = 'bg-' + nextNum;
-                }, 400);
+                taps = 1;
+                document.getElementById('slide' + num).classList.add('hidden');
+                const next = document.getElementById('slide' + (num + 1));
+                if (next) {
+                    next.classList.remove('hidden');
+                    document.body.style.background = colors[num];
+                }
             }
         }
     </script>
