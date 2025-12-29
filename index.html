@@ -21,7 +21,6 @@
             transition: background 1s ease;
         }
 
-        /* Soft background colors for the journey */
         .bg-1 { background: #ffc8dd; }
         .bg-2 { background: #a2d2ff; }
         .bg-3 { background: #cdb4db; }
@@ -70,9 +69,32 @@
             z-index: 200;
             font-size: 24px;
         }
+
+        /* Music Toggle Button (Optional) */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            font-size: 20px;
+        }
     </style>
 </head>
 <body class="bg-1">
+
+    <audio id="mySong" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="music-control" onclick="toggleMusic()">🎵</div>
 
     <div id="slide1" class="card">
         <h1>Hi Tannu! ✨</h1>
@@ -101,8 +123,14 @@
     <script>
         let tapCount = 1;
         const emojis = ['🌸', '✨', '💖', '🦋', '🧸', '🌷', '🌼', '🍭'];
+        const song = document.getElementById("mySong");
 
         function processTap(slideNum) {
+            // Start playing song on the very first tap
+            if (song.paused) {
+                song.play().catch(e => console.log("Audio play blocked until interaction"));
+            }
+
             spawnMagic();
 
             if (tapCount < 3) {
@@ -112,6 +140,11 @@
                 tapCount = 1; 
                 changeSlide(slideNum);
             }
+        }
+
+        function toggleMusic() {
+            if (song.paused) song.play();
+            else song.pause();
         }
 
         function changeSlide(current) {
