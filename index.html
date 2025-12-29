@@ -7,7 +7,13 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap');
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+        /* Reset and Mobile optimization */
+        * { 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+            margin: 0; 
+            padding: 0; 
+        }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -17,31 +23,36 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            transition: background 0.5s;
+            transition: background 0.5s ease;
+            /* Subtle Rajasthani dot pattern on background */
             background-image: radial-gradient(rgba(255,255,255,0.2) 15%, transparent 15%);
-            background-size: 15px 15px;
+            background-size: 20px 20px;
         }
 
-        .bg-1 { background-color: #FF9933; }
-        .bg-2 { background-color: #A52A2A; }
-        .bg-3 { background-color: #FFD700; }
-        .bg-4 { background-color: #E30B5C; }
+        /* Royal Background Colors */
+        .bg-1 { background-color: #FF9933; } /* Saffron */
+        .bg-2 { background-color: #A52A2A; } /* Maroon */
+        .bg-3 { background-color: #FFD700; } /* Gold */
+        .bg-4 { background-color: #E30B5C; } /* Jaipur Pink */
 
         .card {
-            background: #FFF5E1;
+            background: #FFFBF2;
             width: 85%;
             max-width: 320px;
-            padding: 20px;
-            border-radius: 15px;
+            padding: 25px 20px;
+            border-radius: 20px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             position: absolute;
-            border: 3px solid #800000;
-            outline: 2px solid #FFD700;
+            /* THIN ROYAL BORDER FIX */
+            border: 2px solid #800000;
+            outline: 1px solid #FFD700;
+            outline-offset: -5px;
+            
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-height: 300px;
+            min-height: 320px;
         }
 
         .hidden { display: none !important; }
@@ -49,27 +60,28 @@
         h1 { 
             font-family: 'Dancing Script', cursive; 
             color: #800000; 
-            font-size: 1.8rem; 
+            font-size: 2rem; 
             margin-bottom: 10px;
         }
         
-        p { color: #444; line-height: 1.4; margin-bottom: 15px; font-size: 0.9rem; }
+        p { color: #444; line-height: 1.5; margin-bottom: 20px; font-size: 0.95rem; }
         .highlight { color: #E30B5C; font-weight: 700; }
 
         .tap-btn {
-            background: linear-gradient(to right, #800000, #E30B5C);
+            background: linear-gradient(135deg, #800000, #E30B5C);
             color: #FFD700;
             border: 1px solid #FFD700;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 14px;
+            border-radius: 12px;
             width: 100%;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            margin-top: auto; /* Pushes button to stay at the bottom of the card */
+            margin-top: auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        .particle { position: fixed; pointer-events: none; z-index: 999; }
+        .particle { position: fixed; pointer-events: none; z-index: 999; font-size: 20px; }
     </style>
 </head>
 <body class="bg-1">
@@ -104,46 +116,4 @@
 
     <div id="slide4" class="card hidden">
         <div>
-            <h1>Happy New Year, Tannu! ❤️</h1>
-            <p>You are the <span class="highlight">most precious person</span> in my life, so this is my first wish to my precious one.</p>
-            <p>I wish you get all the happiness in the world in 2026!</p>
-        </div>
-        <button class="tap-btn" onclick="location.reload()">Start Over ✨</button>
-    </div>
-
-    <script>
-        let taps = 1;
-        const song = document.getElementById('mySong');
-        const colors = ['bg-1', 'bg-2', 'bg-3', 'bg-4'];
-
-        function handleTap(num) {
-            if (song.paused) song.play().catch(() => {});
-
-            // Simple particles
-            for (let i = 0; i < 8; i++) {
-                const p = document.createElement('div');
-                p.className = 'particle';
-                p.innerHTML = '✨';
-                p.style.left = '50%'; p.style.top = '50%';
-                document.body.appendChild(p);
-                const a = Math.random() * Math.PI * 2;
-                const d = Math.random() * 100 + 50;
-                p.animate([{opacity:1},{transform:`translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px)`,opacity:0}], 800).onfinish = () => p.remove();
-            }
-
-            if (taps < 3) {
-                taps++;
-                document.getElementById('btn' + num).innerText = 'Tap ' + taps;
-            } else {
-                taps = 1;
-                document.getElementById('slide' + num).classList.add('hidden');
-                const next = document.getElementById('slide' + (num + 1));
-                if (next) {
-                    next.classList.remove('hidden');
-                    document.body.className = colors[num];
-                }
-            }
-        }
-    </script>
-</body>
-</html>
+            <h1>Happy New Year
