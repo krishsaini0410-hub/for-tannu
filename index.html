@@ -16,32 +16,24 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            transition: all 0.5s ease;
+            transition: all 0.6s ease;
         }
 
-        /* --- DIFFERENT PATTERNS FOR DIFFERENT SLIDES --- */
-        
-        /* Slide 1: Saffron Leheriya (Traditional Waves) */
+        /* --- RAJASTHANI BACKGROUND PATTERNS --- */
         .bg-1 {
             background: #FF9933;
             background-image: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.1) 20px, rgba(255,255,255,0.1) 40px);
         }
-
-        /* Slide 2: Royal Maroon Bandhani (Traditional Dots) */
         .bg-2 {
             background: #A52A2A;
             background-image: radial-gradient(rgba(255,215,0,0.3) 20%, transparent 20%);
             background-size: 25px 25px;
         }
-
-        /* Slide 3: Golden Mandala Feel */
         .bg-3 {
             background: #FFD700;
             background-image: radial-gradient(circle at center, #CCAA00 1px, transparent 1px);
             background-size: 15px 15px;
         }
-
-        /* Slide 4: Jaipur Pink Jaal (Traditional Grid) */
         .bg-4 {
             background: #E30B5C;
             background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), 
@@ -53,25 +45,26 @@
             background: #FFFBF2;
             width: 85%;
             max-width: 340px;
-            padding: 25px;
-            border-radius: 15px;
+            padding: 30px 20px;
+            border-radius: 20px;
             text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.4);
             border: 2px solid #800000;
             display: none;
             flex-direction: column;
-            animation: slideIn 0.4s ease-out;
+            position: relative;
+            z-index: 10;
         }
 
-        .active { display: flex !important; }
+        .active { display: flex !important; animation: pop 0.4s ease; }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes pop {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
-        h1 { font-family: 'Dancing Script', cursive; color: #800000; font-size: 2.1rem; margin-bottom: 15px; }
-        p { color: #444; line-height: 1.5; margin-bottom: 25px; font-size: 1rem; }
+        h1 { font-family: 'Dancing Script', cursive; color: #800000; font-size: 2.2rem; margin-bottom: 10px; }
+        p { color: #444; line-height: 1.5; margin-bottom: 20px; font-size: 1rem; }
         .highlight { color: #E30B5C; font-weight: 700; }
 
         .tap-btn {
@@ -79,13 +72,21 @@
             color: #FFD700;
             border: 1px solid #FFD700;
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 12px;
             width: 100%;
             font-size: 1.2rem;
             font-weight: 600;
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             touch-action: manipulation;
+        }
+
+        /* Sparkle Style */
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 24px;
         }
     </style>
 </head>
@@ -124,24 +125,45 @@
         let taps = 1;
         const song = document.getElementById('mySong');
         const bgClasses = ['bg-1', 'bg-2', 'bg-3', 'bg-4'];
+        const royalEmojis = ['✨', '🌸', '💖', '🦚', '👑', '🪔', '🌼'];
 
         function handleTap(num) {
-            // Audio trigger
+            // Audio check
             song.play().catch(() => {});
 
+            // SPARKLE EXPLOSION
+            for (let i = 0; i < 12; i++) {
+                const s = document.createElement('div');
+                s.className = 'sparkle';
+                s.innerHTML = royalEmojis[Math.floor(Math.random() * royalEmojis.length)];
+                s.style.left = '50%';
+                s.style.top = '50%';
+                document.body.appendChild(s);
+
+                const angle = Math.random() * Math.PI * 2;
+                const dist = Math.random() * 150 + 50;
+                
+                s.animate([
+                    { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+                    { transform: `translate(${(Math.cos(angle)*dist)}px, ${(Math.sin(angle)*dist)}px) scale(0) rotate(360deg)`, opacity: 0 }
+                ], {
+                    duration: 1000,
+                    easing: 'ease-out'
+                }).onfinish = () => s.remove();
+            }
+
+            // TAP LOGIC
             if (taps < 3) {
                 taps++;
                 document.getElementById('btn' + num).innerText = 'Tap ' + taps;
             } else {
                 taps = 1;
-                // Transition logic
                 document.getElementById('slide' + num).classList.remove('active');
                 let nextNum = num + 1;
                 let nextSlide = document.getElementById('slide' + nextNum);
                 
                 if (nextSlide) {
                     nextSlide.classList.add('active');
-                    // Change background pattern class
                     document.body.className = bgClasses[num];
                 }
             }
