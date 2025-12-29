@@ -19,29 +19,29 @@
             align-items: center;
             overflow: hidden;
             transition: background 0.8s;
-            /* Rajasthani Bandhani Pattern Effect */
-            background-image: radial-gradient(#ffffff 10%, transparent 10%);
-            background-size: 30px 30px;
+            /* Bandhani Dot Pattern */
+            background-image: radial-gradient(rgba(255,255,255,0.3) 10%, transparent 10%);
+            background-size: 20px 20px;
         }
 
-        .bg-1 { background-color: #FF9933; } /* Saffron */
-        .bg-2 { background-color: #A52A2A; } /* Maroon */
-        .bg-3 { background-color: #FFD700; } /* Gold */
-        .bg-4 { background-color: #E30B5C; } /* Jaipur Pink */
+        .bg-1 { background-color: #FF9933; }
+        .bg-2 { background-color: #A52A2A; }
+        .bg-3 { background-color: #FFD700; }
+        .bg-4 { background-color: #E30B5C; }
 
         .card {
             background: #FFF5E1;
-            width: 88%;
-            max-width: 360px;
-            padding: 35px 25px;
+            width: 90%;
+            max-width: 340px;
+            padding: 25px 20px;
             border-radius: 20px;
             text-align: center;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             position: absolute;
-            transition: 0.5s;
-            /* Traditional Rajasthani Print Border */
-            border: 8px solid #800000;
-            border-image: repeating-linear-gradient(45deg, #800000, #800000 10px, #FFD700 10px, #FFD700 20px) 20;
+            transition: 0.4s ease-in-out;
+            /* Fixed Rajasthani Border */
+            border: 5px solid #800000;
+            outline: 3px solid #FFD700;
         }
 
         .hidden { display: none !important; }
@@ -49,36 +49,9 @@
         h1 { 
             font-family: 'Dancing Script', cursive; 
             color: #800000; 
-            font-size: 2.3rem; 
-            margin: 0; 
+            font-size: 2.1rem; 
+            margin: 0 0 10px 0; 
             text-shadow: 1px 1px #FFD700;
         }
         
-        p { color: #444; line-height: 1.6; margin: 15px 0; font-weight: 500; }
-        .highlight { color: #E30B5C; font-weight: 700; }
-
-        .tap-btn {
-            background: linear-gradient(to right, #800000, #E30B5C);
-            color: #FFD700;
-            border: 2px solid #FFD700;
-            padding: 16px;
-            border-radius: 12px;
-            width: 100%;
-            font-size: 1.2rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-
-        .particle { position: fixed; pointer-events: none; z-index: 999; }
-    </style>
-</head>
-<body class="bg-1">
-
-    <audio id="mySong" loop preload="auto">
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
-
-    <div id="slide1" class="card">
-        <h1>Hi Tannu! ✨</h1>
-        <p>I built a small world just for you to start 2026. <br><span class="highlight">Give this button 3 royal taps
+        p { color: #444; line-height: 1.5; margin:
