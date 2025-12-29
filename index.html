@@ -12,7 +12,7 @@
         body {
             margin: 0; padding: 0;
             font-family: 'Poppins', sans-serif;
-            background: #fff5f8;
+            background: #ffc8dd;
             overflow: hidden;
             height: 100vh;
             display: flex;
@@ -44,7 +44,6 @@
 
         h1 { font-family: 'Dancing Script', cursive; font-size: 2.8rem; color: #ff5c8a; margin: 0; }
         p { font-size: 1.05rem; color: #555; margin: 20px 0; line-height: 1.6; }
-        
         .highlight { color: #ff5c8a; font-weight: 600; }
 
         .tap-btn {
@@ -58,10 +57,7 @@
             cursor: pointer;
             box-shadow: 0 8px 15px rgba(255, 92, 138, 0.2);
             width: 100%;
-            transition: transform 0.1s;
         }
-
-        .tap-btn:active { transform: scale(0.95); }
 
         .particle {
             position: fixed;
@@ -69,48 +65,29 @@
             z-index: 200;
             font-size: 24px;
         }
-
-        /* Music Toggle Button (Optional) */
-        .music-control {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 1000;
-            font-size: 20px;
-        }
     </style>
 </head>
 <body class="bg-1">
 
-    <audio id="mySong" loop>
+    <audio id="mySong" loop preload="auto">
         <source src="music.mp3" type="audio/mpeg">
     </audio>
-
-    <div class="music-control" onclick="toggleMusic()">🎵</div>
 
     <div id="slide1" class="card">
         <h1>Hi Tannu! ✨</h1>
         <p>I built a small world just for you to start 2026. <br><span class="highlight">Give this button 3 gentle taps...</span></p>
-        <button id="btn1" class="tap-btn" onclick="processTap(1)">Tap 1</button>
+        <button id="btn1" class="tap-btn" onclick="firstTap(1)">Tap 1</button>
     </div>
 
     <div id="slide2" class="card hidden">
         <h1>For You 🦋</h1>
-        <p>Just like these <span class="highlight">beautiful butterflies</span>, I wish your 2026 is full of freedom, beauty, and joy. May you always find your way to the brightest flowers!</p>
+        <p>Just like these <span class="highlight">beautiful butterflies</span>, I wish your 2026 is full of freedom, beauty, and joy.</p>
         <button id="btn2" class="tap-btn" onclick="processTap(2)">Tap 1</button>
     </div>
 
     <div id="slide3" class="card hidden">
         <h1>Big Hugs 🧸</h1>
-        <p>May your 2026 be filled with as much warmth and comfort as a <span class="highlight">big teddy bear hug</span>. You deserve all the coziness in the world.</p>
+        <p>May your 2026 be filled with as much warmth and comfort as a <span class="highlight">big teddy bear hug</span>.</p>
         <button id="btn3" class="tap-btn" onclick="processTap(3)">Tap 1</button>
     </div>
 
@@ -122,17 +99,18 @@
 
     <script>
         let tapCount = 1;
-        const emojis = ['🌸', '✨', '💖', '🦋', '🧸', '🌷', '🌼', '🍭'];
+        const emojis = ['🌸', '✨', '💖', '🦋', '🧸', '🌷', '🌼'];
         const song = document.getElementById("mySong");
 
+        // SPECIAL FIRST TAP FUNCTION
+        function firstTap(slideNum) {
+            // Force play on first click - this unlocks audio for the whole session
+            song.play(); 
+            processTap(slideNum);
+        }
+
         function processTap(slideNum) {
-            // Start playing song on the very first tap
-            if (song.paused) {
-                song.play().catch(e => console.log("Audio play blocked until interaction"));
-            }
-
             spawnMagic();
-
             if (tapCount < 3) {
                 tapCount++;
                 document.getElementById(`btn${slideNum}`).innerText = `Tap ${tapCount}`;
@@ -140,11 +118,6 @@
                 tapCount = 1; 
                 changeSlide(slideNum);
             }
-        }
-
-        function toggleMusic() {
-            if (song.paused) song.play();
-            else song.pause();
         }
 
         function changeSlide(current) {
@@ -156,10 +129,13 @@
                 currentCard.classList.add('hidden');
                 let nextNum = current + 1;
                 let nextCard = document.getElementById(`slide${nextNum}`);
-                
                 if (nextCard) {
                     nextCard.classList.remove('hidden');
                     document.body.className = `bg-${nextNum}`;
+                    // Update button ID for the next slides to keep working
+                    if(nextNum < 4) {
+                        document.getElementById(`btn${nextNum}`).innerText = "Tap 1";
+                    }
                 }
             }, 500);
         }
@@ -172,7 +148,6 @@
                 p.style.left = '50%';
                 p.style.top = '50%';
                 document.body.appendChild(p);
-
                 const angle = Math.random() * Math.PI * 2;
                 const distance = Math.random() * 200 + 50;
                 const destX = Math.cos(angle) * distance;
