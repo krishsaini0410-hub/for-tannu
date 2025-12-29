@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For Tannu ✨</title>
+    <title>Khamma Ghani Tannu ✨</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap');
 
@@ -12,46 +12,66 @@
         body {
             margin: 0; padding: 0;
             font-family: 'Poppins', sans-serif;
-            background: #ffc8dd;
+            /* Traditional Saffron/Bandhani feel */
+            background: #FF9933; 
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            transition: background 0.6s;
+            transition: background 0.8s;
         }
 
+        /* Rajasthani Theme Backgrounds */
+        .bg-1 { background: #FF9933; } /* Saffron */
+        .bg-2 { background: #A52A2A; } /* Royal Maroon */
+        .bg-3 { background: #FFD700; } /* Golden Yellow */
+        .bg-4 { background: #E30B5C; } /* Deep Pink (Jaipur Pink) */
+
         .card {
-            background: white;
+            background: #FFF5E1; /* Old Paper/Cream color */
             width: 85%;
             max-width: 350px;
             padding: 30px 20px;
-            border-radius: 30px;
+            border-radius: 20px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
             position: absolute;
-            transition: 0.4s;
-            border: 2px solid #ffafcc;
+            transition: 0.5s;
+            /* Traditional Rajasthani Border */
+            border: 6px double #800000;
+            outline: 2px solid #FFD700;
         }
 
         .hidden { display: none !important; }
 
-        h1 { font-family: 'Dancing Script', cursive; color: #ff5c8a; font-size: 2.2rem; margin: 0; }
-        p { color: #555; line-height: 1.6; margin: 15px 0; }
-        .highlight { color: #ff5c8a; font-weight: 600; }
+        h1 { 
+            font-family: 'Dancing Script', cursive; 
+            color: #800000; 
+            font-size: 2.3rem; 
+            margin: 0; 
+            text-shadow: 1px 1px #FFD700;
+        }
+        
+        p { color: #444; line-height: 1.6; margin: 15px 0; font-weight: 500; }
+        
+        .highlight { color: #E30B5C; font-weight: 600; }
 
         .tap-btn {
-            background: #ff5c8a;
-            color: white;
-            border: none;
+            background: linear-gradient(to right, #800000, #E30B5C);
+            color: #FFD700;
+            border: 2px solid #FFD700;
             padding: 15px;
-            border-radius: 50px;
+            border-radius: 10px;
             width: 100%;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 600;
             cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
+        /* Traditional Sprinkles */
         .particle { position: fixed; pointer-events: none; z-index: 999; }
     </style>
 </head>
@@ -62,8 +82,8 @@
     </audio>
 
     <div id="slide1" class="card">
-        <h1>Hi Tannu! ✨</h1>
-        <p>I built a small world just for you to start 2026. <br><span class="highlight">Give this button 3 gentle taps...</span></p>
+        <h1>Khamma Ghani, Tannu! ✨</h1>
+        <p>I built a small world just for you to start 2026. <br><span class="highlight">Give this button 3 royal taps...</span></p>
         <button id="btn1" class="tap-btn" onclick="handleTap(1)">Tap 1</button>
     </div>
 
@@ -83,35 +103,36 @@
         <h1>Happy New Year, Tannu! ❤️</h1>
         <p>You are the <span class="highlight">most precious person</span> in my life, so this is my first wish to my precious one.</p>
         <p>I wish you get all the happiness in the world in 2026!</p>
-        <button class="tap-btn" onclick="location.reload()">See it again ✨</button>
+        <button class="tap-btn" onclick="location.reload()">Start Over ✨</button>
     </div>
 
     <script>
         let taps = 1;
         const song = document.getElementById('mySong');
-        const colors = ['#ffc8dd', '#a2d2ff', '#cdb4db', '#fdf0d5'];
+        // Rajasthani Theme Background Colors
+        const colors = ['#FF9933', '#A52A2A', '#FFD700', '#E30B5C'];
+        // Traditional Emojis
+        const rajasthaniEmojis = ['✨', '🌸', '🔱', '💖', '🌼', '👑', '🦚'];
 
         function handleTap(num) {
-            // Play music
             if (song.paused) song.play().catch(() => {});
 
-            // Explosion
-            for (let i = 0; i < 10; i++) {
+            // Traditional Explosion
+            for (let i = 0; i < 15; i++) {
                 const p = document.createElement('div');
                 p.className = 'particle';
-                p.innerHTML = ['🌸','✨','💖','🦋'][Math.floor(Math.random()*4)];
+                p.innerHTML = rajasthaniEmojis[Math.floor(Math.random() * rajasthaniEmojis.length)];
                 p.style.left = '50%'; p.style.top = '50%';
-                p.style.fontSize = '20px';
+                p.style.fontSize = '24px';
                 document.body.appendChild(p);
-                const a = Math.random()*Math.PI*2;
-                const d = Math.random()*150+50;
+                const a = Math.random() * Math.PI * 2;
+                const d = Math.random() * 160 + 60;
                 p.animate([
                     {transform:'translate(-50%,-50%) scale(1)', opacity:1},
-                    {transform:`translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px) scale(0)`, opacity:0}
-                ], 1000).onfinish = () => p.remove();
+                    {transform:`translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px) scale(0) rotate(360deg)`, opacity:0}
+                ], 1200).onfinish = () => p.remove();
             }
 
-            // Logic
             if (taps < 3) {
                 taps++;
                 document.getElementById('btn' + num).innerText = 'Tap ' + taps;
