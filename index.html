@@ -98,4 +98,78 @@
         <h1>Warmth 🧸</h1>
         <p>Sending you soft hugs and endless comfort this year.</p>
         <button class="tap-btn" onclick="handleTap(3)">Tap 🧸</button>
-        <div class
+        <div class="dots"><div class="dot d3-1"></div><div class="dot d3-2"></div><div class="dot d3-3"></div></div>
+    </div>
+
+    <div id="slide4" class="card hidden">
+        <h1>For Tannu ❤️</h1>
+        <p>Happy 2026! You make the world a much more beautiful place.</p>
+        <button class="tap-btn" onclick="location.reload()">Restart ✨</button>
+    </div>
+
+    <script>
+        let tapCount = 0;
+        const emojis = ['🌸', '✨', '💖', '🌼', '🦋', '🧸', '🌷'];
+
+        function handleTap(slideNum) {
+            tapCount++;
+            
+            // Activate dots
+            const dot = document.querySelector(`.d${slideNum}-${tapCount}`);
+            if(dot) dot.classList.add('active');
+
+            if (tapCount < 3) {
+                // Mini Sprinkle
+                createBurst(15);
+            } else {
+                // Final Sprinkle + Change Slide
+                createBurst(40);
+                setTimeout(() => {
+                    goToNextSlide(slideNum);
+                }, 500);
+            }
+        }
+
+        function goToNextSlide(current) {
+            tapCount = 0;
+            document.getElementById(`slide${current}`).classList.add('hidden');
+            const next = document.getElementById(`slide${current + 1}`);
+            if(next) {
+                next.classList.remove('hidden');
+                document.body.className = `bg-${current + 1}`;
+            }
+        }
+
+        function createBurst(count) {
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                
+                const startX = window.innerWidth / 2;
+                const startY = window.innerHeight / 2;
+                
+                particle.style.left = startX + 'px';
+                particle.style.top = startY + 'px';
+                particle.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                
+                document.body.appendChild(particle);
+
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 8 + 4;
+                const destinationX = Math.cos(angle) * (count * 6);
+                const destinationY = Math.sin(angle) * (count * 6);
+
+                particle.animate([
+                    { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+                    { transform: `translate(${destinationX}px, ${destinationY}px) scale(0)`, opacity: 0 }
+                ], {
+                    duration: 1500 + Math.random() * 1000,
+                    easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)',
+                    fill: 'forwards'
+                }).onfinish = () => particle.remove();
+            }
+        }
+    </script>
+</body>
+</html>
