@@ -18,51 +18,57 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: background 0.8s ease;
+            transition: background 1s ease;
         }
 
-        /* Soft background colors for each stage */
+        /* Soft background colors */
         .bg-1 { background: #ffc8dd; }
         .bg-2 { background: #a2d2ff; }
         .bg-3 { background: #cdb4db; }
-        .bg-4 { background: #ffafcc; }
+        .bg-4 { background: #fdf0d5; }
 
         .card {
             background: rgba(255, 255, 255, 0.95);
-            padding: 40px 20px;
+            padding: 40px 25px;
             border-radius: 40px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-            width: 85%;
-            max-width: 350px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            width: 88%;
+            max-width: 380px;
             text-align: center;
             z-index: 100;
             position: absolute;
-            transition: 0.5s ease;
+            transition: opacity 0.5s ease, transform 0.5s ease;
             border: 2px solid white;
         }
 
-        .hidden { display: none; }
+        .hidden { display: none; opacity: 0; transform: scale(0.9); }
 
         h1 { font-family: 'Dancing Script', cursive; font-size: 2.8rem; color: #ff5c8a; margin: 0; }
-        p { font-size: 1.05rem; color: #555; margin: 15px 0 25px 0; line-height: 1.4; }
+        p { font-size: 1.05rem; color: #555; margin: 20px 0; line-height: 1.6; }
+        
+        .highlight { color: #ff5c8a; font-weight: 600; }
 
         .tap-btn {
             background: #ff5c8a;
             color: white;
             border: none;
-            padding: 15px 40px;
+            padding: 16px;
             border-radius: 50px;
             font-size: 1.2rem;
             font-weight: 600;
             cursor: pointer;
             box-shadow: 0 8px 15px rgba(255, 92, 138, 0.2);
             width: 100%;
+            transition: transform 0.1s;
         }
+
+        .tap-btn:active { transform: scale(0.95); }
 
         .particle {
             position: fixed;
             pointer-events: none;
             z-index: 200;
+            font-size: 24px;
         }
     </style>
 </head>
@@ -70,77 +76,84 @@
 
     <div id="slide1" class="card">
         <h1>Hi Tannu! ✨</h1>
-        <p>Your 2026 surprise is waiting. Tap the button 3 times!</p>
+        <p>I built a small world just for you to start 2026. <br><span class="highlight">Give this button 3 gentle taps...</span></p>
         <button id="btn1" class="tap-btn" onclick="processTap(1)">Tap 1</button>
     </div>
 
     <div id="slide2" class="card hidden">
         <h1>For You 🦋</h1>
-        <p>May your year be as beautiful as your smile.</p>
+        <p>Just like these <span class="highlight">beautiful butterflies</span>, I wish your 2026 is full of freedom, beauty, and joy. May you always find your way to the brightest flowers!</p>
         <button id="btn2" class="tap-btn" onclick="processTap(2)">Tap 1</button>
     </div>
 
     <div id="slide3" class="card hidden">
-        <h1>Big Hug 🧸</h1>
-        <p>Sending you soft hugs for every day of 2026.</p>
+        <h1>Big Hugs 🧸</h1>
+        <p>May your 2026 be filled with as much warmth and comfort as a <span class="highlight">big teddy bear hug</span>. You deserve all the coziness in the world.</p>
         <button id="btn3" class="tap-btn" onclick="processTap(3)">Tap 1</button>
     </div>
 
     <div id="slide4" class="card hidden">
         <h1>Happy 2026! ❤️</h1>
-        <p>Tannu, you are special. Let's make this year amazing!</p>
-        <button class="tap-btn" onclick="location.reload()">See it Again ✨</button>
+        <p>Tannu, you make every day feel like spring. You are the sparkle in my life. <br><span class="highlight">Let's make this year amazing!</span></p>
+        <button class="tap-btn" onclick="location.reload()">See it again ✨</button>
     </div>
 
     <script>
-        let count = 1;
-        const emojis = ['🌸', '✨', '💖', '🦋', '🧸', '🌷'];
+        let tapCount = 1;
+        const emojis = ['🌸', '✨', '💖', '🦋', '🧸', '🌷', '🌼', '🍭'];
 
         function processTap(slideNum) {
-            // 1. Create a sprinkle of emojis
-            spawnEmojis();
+            // Create the sprinkle effect
+            spawnMagic();
 
-            // 2. Update the button text
-            count++;
-            if (count <= 3) {
-                document.getElementById(`btn${slideNum}`).innerText = `Tap ${count}`;
-            } 
+            // Check if we reached 3 taps
+            if (tapCount < 3) {
+                tapCount++;
+                document.getElementById(`btn${slideNum}`).innerText = `Tap ${tapCount}`;
+            } else {
+                // On the 3rd tap, move to next slide
+                tapCount = 1; // reset for next
+                changeSlide(slideNum);
+            }
+        }
+
+        function changeSlide(current) {
+            const currentCard = document.getElementById(`slide${current}`);
+            currentCard.style.opacity = '0';
+            currentCard.style.transform = 'scale(0.8)';
             
-            // 3. If tapped 3 times, go to next slide
-            if (count > 3) {
-                count = 1; // Reset for next slide
-                showNext(slideNum);
-            }
+            setTimeout(() => {
+                currentCard.classList.add('hidden');
+                let nextNum = current + 1;
+                let nextCard = document.getElementById(`slide${nextNum}`);
+                
+                if (nextCard) {
+                    nextCard.classList.remove('hidden');
+                    document.body.className = `bg-${nextNum}`;
+                }
+            }, 500);
         }
 
-        function showNext(current) {
-            document.getElementById(`slide${current}`).classList.add('hidden');
-            let nextId = current + 1;
-            let nextSlide = document.getElementById(`slide${nextId}`);
-            if (nextSlide) {
-                nextSlide.classList.remove('hidden');
-                document.body.className = `bg-${nextId}`;
-            }
-        }
-
-        function spawnEmojis() {
+        function spawnMagic() {
+            // Burst of 15 emojis from the center
             for (let i = 0; i < 15; i++) {
                 const p = document.createElement('div');
                 p.className = 'particle';
                 p.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
                 p.style.left = '50%';
                 p.style.top = '50%';
-                p.style.fontSize = '25px';
                 document.body.appendChild(p);
 
-                const destX = (Math.random() - 0.5) * 400;
-                const destY = (Math.random() - 0.5) * 400;
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 200 + 50;
+                const destX = Math.cos(angle) * distance;
+                const destY = Math.sin(angle) * distance;
 
                 p.animate([
                     { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
-                    { transform: `translate(${destX}px, ${destY}px) scale(0)`, opacity: 0 }
+                    { transform: `translate(${destX}px, ${destY}px) scale(0) rotate(360deg)`, opacity: 0 }
                 ], {
-                    duration: 1000,
+                    duration: 1200,
                     easing: 'ease-out'
                 }).onfinish = () => p.remove();
             }
