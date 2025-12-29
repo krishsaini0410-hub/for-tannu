@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 for Tannu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="page4-body">
+    <div class="container">
+        <h2>Happy New Year, Tannu! 🌸</h2>
+        <div class="flower-pot" style="font-size: 5rem;">💐🧸🌷</div>
+        <p>Tannu, you are the most special person I know.</p>
+        <p>I hope 2026 brings you as much happiness as you've given me just by being you.</p>
+        
+        <button class="btn" onclick="celebrate()">Click for Final Surprise</button>
+        
+        <div id="final-wish" style="display:none; margin-top: 20px; font-weight: bold; color: #ff4d6d; font-size: 1.5rem;">
+            I'm so glad you're in my life! ❤️
+        </div>
+    </div>
+
+    <script>
+        function celebrate() {
+            document.getElementById('final-wish').style.display = 'block';
+            for(let i=0; i<100; i++) {
+                const petal = document.createElement('div');
+                petal.innerHTML = '🌸';
+                petal.style.position = 'fixed';
+                petal.style.left = Math.random() * 100 + 'vw';
+                petal.style.top = '-5vh';
+                petal.style.fontSize = Math.random() * 20 + 10 + 'px';
+                petal.style.transform = `rotate(${Math.random() * 360}deg)`;
+                petal.style.transition = 'top 3s linear, opacity 3s';
+                document.body.appendChild(petal);
+                
+                setTimeout(() => {
+                    petal.style.top = '110vh';
+                    petal.style.opacity = '0';
+                }, 10);
+            }
+        }
+    </script>
+</body>
+</html>

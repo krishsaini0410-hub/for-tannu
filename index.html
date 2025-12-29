@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Tannu ✨</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .sparkle { position: absolute; background: white; border-radius: 50%; pointer-events: none; animation: shine 2s infinite; }
+        @keyframes shine { 0%, 100% { transform: scale(0); opacity: 0; } 50% { transform: scale(1); opacity: 1; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="sparkle-container"></div>
+        <h1>Hi Tannu! ❤️</h1>
+        <p>I built a small world just for you to start 2026.</p>
+        <p>Are you ready to see your surprises?</p>
+        <a href="page2.html" class="btn">Yes, let's go! ✨</a>
+    </div>
+
+    <script>
+        // Adding little sparkles to the background automatically
+        const container = document.getElementById('sparkle-container');
+        for (let i = 0; i < 20; i++) {
+            const s = document.createElement('div');
+            s.className = 'sparkle';
+            s.style.left = Math.random() * 100 + '%';
+            s.style.top = Math.random() * 100 + '%';
+            s.style.width = Math.random() * 5 + 'px';
+            s.style.height = s.style.width;
+            s.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(s);
+        }
+    </script>
+</body>
+</html>
