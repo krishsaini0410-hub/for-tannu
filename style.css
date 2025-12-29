@@ -1,41 +1,62 @@
-/* style.css */
+/* Updated style.css for Mobile Scroll */
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;600&display=swap');
 
 :root {
     --pink-light: #ffc8dd;
     --pink-main: #ffafcc;
-    --pink-dark: #ff85a1;
-    --purple-light: #e0b1cb;
-    --purple-main: #a2d2ff; /* Using blue for contrast */
-    --gold: #FFD700;
+    --pink-dark: #ff4d6d;
+    --blue: #a2d2ff;
     --white: #ffffff;
-    --text-dark: #333333;
 }
 
 body {
     margin: 0;
-    height: 100vh;
+    padding: 0;
+    /* CHANGED: This allows scrolling on mobile */
+    min-height: 100vh; 
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, var(--pink-light), var(--purple-main));
-    overflow: hidden;
-    color: var(--text-dark);
-    position: relative; /* For interactive elements */
+    background: linear-gradient(135deg, var(--pink-light), var(--blue));
+    /* CHANGED: Allow vertical scrolling if content is too long */
+    overflow-x: hidden;
+    overflow-y: auto; 
+    padding: 20px 0; /* Adds space at top/bottom for the button */
 }
 
 .container {
     text-align: center;
-    background: rgba(255, 255, 255, 0.85);
-    padding: 40px 60px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
     border-radius: 30px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-    max-width: 600px;
-    position: relative;
-    z-index: 10;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 85%; /* Responsive width */
+    max-width: 400px;
     border: 5px solid var(--white);
-    animation: fadeIn 1s ease-out forwards;
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* Ensure the button stays inside the card and is easy to tap */
+.btn {
+    display: inline-block;
+    background: var(--pink-dark);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 25px;
+    box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
+    /* Prevent the button from being hidden at the very bottom */
+    margin-bottom: 10px; 
+}
+
+h1, h2 {
+    font-family: 'Dancing Script', cursive;
+    color: var(--pink-dark);
+    font-size: 2.8rem; /* Slightly smaller for mobile */
+    margin-top: 0;
 }
 
 @keyframes fadeIn {
@@ -43,158 +64,7 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-h1, h2 {
-    font-family: 'Dancing Script', cursive;
-    color: var(--pink-dark);
-    font-size: 3.5rem;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-}
-
-p {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    color: var(--text-dark);
-}
-
-.highlight {
-    color: var(--purple-main);
-    font-weight: 600;
-}
-
-.btn {
-    display: inline-block;
-    background: linear-gradient(45deg, var(--pink-dark), var(--pink-main));
-    color: var(--white);
-    padding: 14px 30px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: bold;
-    margin-top: 25px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 5px 15px rgba(255, 105, 161, 0.3);
-}
-
-.btn:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 8px 20px rgba(255, 105, 161, 0.5);
-}
-
-/* --- Floating Elements --- */
-.floating-element {
-    position: absolute;
-    pointer-events: none;
-    animation: floatAnimation 10s ease-in-out infinite;
-    z-index: 5;
-    opacity: 0.8;
-}
-
-@keyframes floatAnimation {
-    0% { transform: translateY(0) rotate(0deg); }
-    25% { transform: translateY(-10px) rotate(5deg); }
-    50% { transform: translateY(0) rotate(0deg); }
-    75% { transform: translateY(10px) rotate(-5deg); }
-    100% { transform: translateY(0) rotate(0deg); }
-}
-
-/* Specific Page Overrides */
-#page2-body { background: linear-gradient(135deg, #a2d2ff, #bde0fe); } /* Lighter blue */
-#page3-body { background: linear-gradient(135deg, #fce1e4, #fed7c3); } /* Warm peach */
-#page4-body { background: linear-gradient(135deg, #d4fcd0, #fcfdcf); } /* Greenish-yellow */
-
-
-/* Butterfly Animation (Page 2) */
-.butterfly {
-    position: absolute;
-    font-size: 2.5rem; /* Larger emoji */
-    animation: flyButterfly 15s linear infinite;
-    pointer-events: none;
-    opacity: 0.8;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-}
-
-@keyframes flyButterfly {
-    0% { top: 100%; left: 0%; transform: rotate(0deg); }
-    25% { top: 70%; left: 30%; transform: rotate(30deg); }
-    50% { top: 40%; left: 70%; transform: rotate(-30deg); }
-    75% { top: 10%; left: 50%; transform: rotate(20deg); }
-    100% { top: -10%; left: 10%; transform: rotate(0deg); }
-}
-
-/* Teddy Bear (Page 3) */
-.teddy-container {
-    position: relative;
-    padding-bottom: 20px;
-}
-.teddy-emoji {
-    font-size: 6rem; /* Big teddy */
-    animation: teddyBounce 2s ease-in-out infinite;
-    display: inline-block;
-    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
-}
-@keyframes teddyBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
-}
-
-
-/* Flower Bloom (Page 4) */
-.flower-pot {
-    position: relative;
-    width: 100%;
-    height: 150px; /* Space for flowers */
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-}
-.flower-stem {
-    position: absolute;
-    width: 3px;
-    height: 0;
-    background-color: green;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: growStem 2s ease-out forwards;
-    animation-delay: var(--delay);
-}
-.flower-petal {
-    position: absolute;
-    font-size: 0;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: bloomPetals 2s ease-out forwards;
-    animation-delay: var(--delay);
-    opacity: 0;
-}
-
-@keyframes growStem {
-    from { height: 0; }
-    to { height: var(--stem-height); }
-}
-@keyframes bloomPetals {
-    0% { font-size: 0; opacity: 0; }
-    50% { opacity: 0.5; }
-    100% { font-size: 3rem; opacity: 1; }
-}
-
-.hidden-message {
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-}
-.hidden-message.visible {
-    opacity: 1;
-}
-
-/* General Link Styling (for navigation) */
-.nav-links a {
-    color: var(--pink-main);
-    text-decoration: none;
-    margin: 0 10px;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-.nav-links a:hover {
-    color: var(--pink-dark);
+/* Floating Elements Fix */
+.butterfly, .heart, .floating-element {
+    z-index: 1;
 }
