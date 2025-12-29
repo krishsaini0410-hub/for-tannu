@@ -11,21 +11,15 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: #FF9933; 
-            min-height: 100vh;
+            background-color: #FF9933; /* Start Saffron */
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            transition: background 0.5s ease;
             background-image: radial-gradient(rgba(255,255,255,0.2) 15%, transparent 15%);
             background-size: 20px 20px;
         }
-
-        .bg-1 { background-color: #FF9933; }
-        .bg-2 { background-color: #A52A2A; }
-        .bg-3 { background-color: #FFD700; }
-        .bg-4 { background-color: #E30B5C; }
 
         .card {
             background: #FFFBF2;
@@ -36,26 +30,13 @@
             text-align: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             border: 2px solid #800000;
-            display: none; /* Hide all by default */
-            flex-direction: column;
-            animation: fadeIn 0.5s ease;
+            display: none; /* Hide all cards */
         }
 
-        /* Show only the active card */
-        .card.active { display: flex; }
+        /* ONLY show the active card */
+        .active { display: block !important; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        h1 { 
-            font-family: 'Dancing Script', cursive; 
-            color: #800000; 
-            font-size: 2.2rem; 
-            margin-bottom: 15px;
-        }
-        
+        h1 { font-family: 'Dancing Script', cursive; color: #800000; font-size: 2.2rem; margin-bottom: 15px; }
         p { color: #444; line-height: 1.6; margin-bottom: 25px; font-size: 1rem; }
         .highlight { color: #E30B5C; font-weight: 700; }
 
@@ -69,14 +50,10 @@
             font-size: 1.2rem;
             font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            touch-action: manipulation;
         }
-
-        .particle { position: fixed; pointer-events: none; z-index: 999; font-size: 25px; }
     </style>
 </head>
-<body class="bg-1">
+<body>
 
     <audio id="mySong" loop preload="auto">
         <source src="music.mp3" type="audio/mpeg">
@@ -84,7 +61,7 @@
 
     <div id="slide1" class="card active">
         <h1>Hi Tannu! ✨</h1>
-        <p>I built a small world just for you to start 2026. <br><span class="highlight">Give this button 3 royal taps...</span></p>
+        <p>I built a small world just for you to start 2026. <br><span class="highlight">Give this button 3 taps...</span></p>
         <button id="btn1" class="tap-btn" onclick="handleTap(1)">Tap 1</button>
     </div>
 
@@ -110,41 +87,34 @@
     <script>
         let taps = 1;
         const song = document.getElementById('mySong');
-        const colors = ['bg-1', 'bg-2', 'bg-3', 'bg-4'];
+        // Colors for background change
+        const bgColors = ['#FF9933', '#A52A2A', '#FFD700', '#E30B5C'];
 
-        function handleTap(num) {
-            // Force music play
-            if (song.paused) {
-                song.play().catch(e => console.log("Waiting for more taps for audio"));
-            }
+        function handleTap(slideNum) {
+            // 1. Play Song immediately
+            song.play().catch(() => {});
 
-            // Burst Effect
-            for (let i = 0; i < 12; i++) {
-                const p = document.createElement('div');
-                p.className = 'particle';
-                p.innerHTML = ['✨', '🌸', '💖', '🦚'][Math.floor(Math.random()*4)];
-                p.style.left = '50%'; p.style.top = '50%';
-                document.body.appendChild(p);
-                const a = Math.random() * Math.PI * 2;
-                const d = Math.random() * 120 + 50;
-                p.animate([
-                    {transform:'translate(-50%,-50%) scale(1)', opacity:1},
-                    {transform:`translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px) scale(0)`, opacity:0}
-                ], 800).onfinish = () => p.remove();
-            }
-
-            // Logic Fix
+            // 2. Logic for 3 taps
             if (taps < 3) {
                 taps++;
-                document.getElementById('btn' + num).innerText = 'Tap ' + taps;
+                // Update button text
+                document.getElementById('btn' + slideNum).innerText = 'Tap ' + taps;
             } else {
+                // Reset taps for next slide
                 taps = 1;
-                // Hide current, show next
-                document.getElementById('slide' + num).classList.remove('active');
-                const nextSlide = document.getElementById('slide' + (num + 1));
+                
+                // 3. Move to next slide
+                // Hide current
+                document.getElementById('slide' + slideNum).classList.remove('active');
+                
+                // Show next
+                let nextNum = slideNum + 1;
+                let nextSlide = document.getElementById('slide' + nextNum);
+                
                 if (nextSlide) {
                     nextSlide.classList.add('active');
-                    document.body.className = colors[num];
+                    // Change body background
+                    document.body.style.backgroundColor = bgColors[slideNum];
                 }
             }
         }
