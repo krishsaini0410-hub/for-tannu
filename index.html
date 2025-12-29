@@ -76,7 +76,7 @@
     <div id="slide1" class="card">
         <h1>Hi Tannu! ✨</h1>
         <p>I built a small world just for you to start 2026. <br><span class="highlight">Give this button 3 gentle taps...</span></p>
-        <button id="btn1" class="tap-btn" onclick="firstTap(1)">Tap 1</button>
+        <button id="btn1" class="tap-btn" onclick="processTap(1)">Tap 1</button>
     </div>
 
     <div id="slide2" class="card hidden">
@@ -103,13 +103,14 @@
         const emojis = ['🌸', '✨', '💖', '🦋', '🧸', '🌷', '🌼'];
         const song = document.getElementById("mySong");
 
-        function firstTap(slideNum) {
-            song.play(); 
-            processTap(slideNum);
-        }
-
         function processTap(slideNum) {
+            // Start music on the very first interaction
+            if (slideNum === 1 && tapCount === 1) {
+                song.play().catch(e => console.log("Audio play prevented"));
+            }
+
             spawnMagic();
+
             if (tapCount < 3) {
                 tapCount++;
                 document.getElementById(`btn${slideNum}`).innerText = `Tap ${tapCount}`;
@@ -128,10 +129,12 @@
                 currentCard.classList.add('hidden');
                 let nextNum = current + 1;
                 let nextCard = document.getElementById(`slide${nextNum}`);
+                
                 if (nextCard) {
                     nextCard.classList.remove('hidden');
                     document.body.className = `bg-${nextNum}`;
-                    if(nextNum < 4) {
+                    // Set next button text to Tap 1 if not on the last slide
+                    if (nextNum < 4) {
                         document.getElementById(`btn${nextNum}`).innerText = "Tap 1";
                     }
                 }
@@ -142,24 +145,4 @@
             for (let i = 0; i < 15; i++) {
                 const p = document.createElement('div');
                 p.className = 'particle';
-                p.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-                p.style.left = '50%';
-                p.style.top = '50%';
-                document.body.appendChild(p);
-                const angle = Math.random() * Math.PI * 2;
-                const distance = Math.random() * 200 + 50;
-                const destX = Math.cos(angle) * distance;
-                const destY = Math.sin(angle) * distance;
-
-                p.animate([
-                    { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
-                    { transform: `translate(${destX}px, ${destY}px) scale(0) rotate(360deg)`, opacity: 0 }
-                ], {
-                    duration: 1200,
-                    easing: 'ease-out'
-                }).onfinish = () => p.remove();
-            }
-        }
-    </script>
-</body>
-</html>
+                p.innerHTML = emojis[Math
