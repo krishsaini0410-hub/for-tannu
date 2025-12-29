@@ -42,7 +42,7 @@
 
         .hidden { display: none; opacity: 0; transform: scale(0.9); }
 
-        h1 { font-family: 'Dancing Script', cursive; font-size: 2.8rem; color: #ff5c8a; margin: 0; }
+        h1 { font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #ff5c8a; margin: 0; }
         p { font-size: 1.05rem; color: #555; margin: 20px 0; line-height: 1.6; }
         .highlight { color: #ff5c8a; font-weight: 600; }
 
@@ -92,8 +92,9 @@
     </div>
 
     <div id="slide4" class="card hidden">
-        <h1>Happy New Year Tannu! ❤️</h1>
-        <p>Tannu, you make every day feel like spring. You are the sparkle in my life. <br><span class="highlight">Let's make this year amazing!</span></p>
+        <h1>Happy New Year, Tannu! ❤️</h1>
+        <p>You are the <span class="highlight">most precious person</span> in my life, so this is my first wish to my precious one.</p>
+        <p>I wish you get all the happiness in the world in 2026!</p>
         <button class="tap-btn" onclick="location.reload()">See it again ✨</button>
     </div>
 
@@ -102,9 +103,7 @@
         const emojis = ['🌸', '✨', '💖', '🦋', '🧸', '🌷', '🌼'];
         const song = document.getElementById("mySong");
 
-        // SPECIAL FIRST TAP FUNCTION
         function firstTap(slideNum) {
-            // Force play on first click - this unlocks audio for the whole session
             song.play(); 
             processTap(slideNum);
         }
@@ -132,7 +131,6 @@
                 if (nextCard) {
                     nextCard.classList.remove('hidden');
                     document.body.className = `bg-${nextNum}`;
-                    // Update button ID for the next slides to keep working
                     if(nextNum < 4) {
                         document.getElementById(`btn${nextNum}`).innerText = "Tap 1";
                     }
